@@ -1,0 +1,57 @@
+{% extends 'adminpanel/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Payment Table</h1>
+    <p class="mb-4">Payment Details</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Payments -list</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+
+                    <tr>
+                        <th>User</th>
+                        <th>Payment method</th>
+                        <th>Payment ID</th>
+                        <th>Amount Paid</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                
+
+                <tbody>
+                    
+                    {% if payments %}
+                        {% for pay in payments %}
+                            <tr>
+                                <td>{{pay.user}}</td>
+                                <td>{{pay.payment_method}}</td>
+                                <td>{{pay.payment_id}}</td>
+                                <td>₹ {{pay.amount_paid}}</td>
+                                <td>{{pay.status}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    <!-- /.container-fluid -->
+
+
+{% endblock content %}
