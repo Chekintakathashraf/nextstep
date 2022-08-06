@@ -14,88 +14,113 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def adminpanel(request):
-    return render(request,'adminpanel/adminpanel.html')
+    if request.user.is_superadmin:
+        return render(request,'adminpanel/adminpanel.html')
+    else:
+        return redirect('home')
 
 def admin_login(request):
     return render(request,'adminpanel/admin_accounts/admin_login.html')
+    
 
 @login_required(login_url ='login')
 def user_accounts_table(request):
-    active_users = Account.objects.all().filter(is_admin=False,is_active=True)
-    banned_users = Account.objects.all().filter(is_admin = False, is_active =False)
-    context  = {
-        'active_users' : active_users,
-        'banned_users' : banned_users,
-    }
-    return render(request,'adminpanel/admin_accounts/accounts.html',context)
+    if request.user.is_superadmin:
+        active_users = Account.objects.all().filter(is_admin=False,is_active=True)
+        banned_users = Account.objects.all().filter(is_admin = False, is_active =False)
+        context  = {
+            'active_users' : active_users,
+            'banned_users' : banned_users,
+        }
+        return render(request,'adminpanel/admin_accounts/accounts.html',context)
+    else:
+        return redirect('home')
 
 @login_required(login_url ='login')
 def ban_user(request,id):
-    user           = Account.objects.get(id=id)
-    user.is_active = False
-    user.save()
-    return redirect('user_accounts_table')
+    if request.user.is_superadmin:
+        user           = Account.objects.get(id=id)
+        user.is_active = False
+        user.save()
+        return redirect('user_accounts_table')
+    else:
+        return redirect('home')
 
 @login_required(login_url ='login')
 def unban_user(request,id):
-    user           = Account.objects.get(id=id)
-    user.is_active = True
-    user.save()
-    return redirect('user_accounts_table')
+    if request.user.is_superadmin:
+        user           = Account.objects.get(id=id)
+        user.is_active = True
+        user.save()
+        return redirect('user_accounts_table')
+    else:
+        return redirect('home')
 
 @login_required(login_url ='login')
 def category_table(request):
-    categorys=category.objects.all()
-    context={
-        'categorys':categorys,
-    }
-    return render(request,'adminpanel/category_table/category_table.html',context)
+    if request.user.is_superadmin:
+        categorys=category.objects.all()
+        context={
+            'categorys':categorys,
+        }
+        return render(request,'adminpanel/category_table/category_table.html',context)
+    else:
+        return redirect('home')
 
 @login_required(login_url ='login')
 def addcategory(request):
-    form = CategoryForm()
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            categorys = form.save()
-            category_name = form.cleaned_data['category_name']
-            slug = slugify(category_name)
-            categorys.slug = slug
-            categorys.save()
-            messages.success(request,'New category added successfully')
-            return redirect('category_table')
-    context = {
-        'form' : form,
-    }
-    return render (request,'adminpanel/category_table/add_category.html',context)
+    if request.user.is_superadmin:
+        form = CategoryForm()
+        if request.method == 'POST':
+            form = CategoryForm(request.POST)
+            if form.is_valid():
+                categorys = form.save()
+                category_name = form.cleaned_data['category_name']
+                slug = slugify(category_name)
+                categorys.slug = slug
+                categorys.save()
+                messages.success(request,'New category added successfully')
+                return redirect('category_table')
+        context = {
+            'form' : form,
+        }
+        return render (request,'adminpanel/category_table/add_category.html',context)
+    else:
+        return redirect('home')
 
 
 @login_required(login_url ='login')
 def editcategory(request,id):
-    categorys = category.objects.get(id=id)
-    if request.method == 'POST':
-        form = CategoryForm(request.POST,request.FILES,instance=categorys)
-        if form.is_valid():
-            category_name = form.cleaned_data['category_name']
-            slug = slugify(category_name)
-            categoryss = form.save()
-            categoryss.slug = slug
-            categoryss.save()
-            messages.success(request,'category editted successfully')
-            return redirect('category_table')
+    if request.user.is_superadmin:
+        categorys = category.objects.get(id=id)
+        if request.method == 'POST':
+            form = CategoryForm(request.POST,request.FILES,instance=categorys)
+            if form.is_valid():
+                category_name = form.cleaned_data['category_name']
+                slug = slugify(category_name)
+                categoryss = form.save()
+                categoryss.slug = slug
+                categoryss.save()
+                messages.success(request,'category editted successfully')
+                return redirect('category_table')
+        else:
+            form = CategoryForm(instance=categorys)
+        context = {
+            'form' : form,
+        }
+        return render(request,'adminpanel/category_table/add_category.html',context)
     else:
-        form = CategoryForm(instance=categorys)
-    context = {
-        'form' : form,
-    }
-    return render(request,'adminpanel/category_table/add_category.html',context)
+        return redirect('home')
 
 
 @login_required(login_url ='login')
 def deletecategory(request,id):
-    categorys=category.objects.get(id=id)
-    categorys.delete()
-    return redirect('category_table')
+    if request.user.is_superadmin:
+        categorys=category.objects.get(id=id)
+        categorys.delete()
+        return redirect('category_table')
+    else:
+        return redirect('home')
 
 @login_required(login_url ='login')
 def order_table(request,id):
