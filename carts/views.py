@@ -209,7 +209,7 @@ def cart(request,total=0,quantity=0, cart_items=None):
                 coupon_user = CouponUsers.objects.get(user=request.user, is_used= False)
                 print('----------------------------')
                 print(coupon_user)
-                coupon = coupon_user.amount if total >= 500 else 0
+                coupon = coupon_user.amount 
                 print('++++++++++++++++++++++++++++++++++++++')
                 print(coupon)
         else:
@@ -257,7 +257,7 @@ def checkout(request,total=0,quantity=0, cart_items=None):
             coupon_user = CouponUsers.objects.get(user=request.user, is_used= False)
             print('----------------------------')
             print(coupon_user)
-            coupon      = coupon_user.amount if total >= 500 else 0
+            coupon      = coupon_user.amount 
         tax = (2 * total/100 )
         grand_total = total + tax - coupon
 
@@ -281,7 +281,7 @@ def add_coupon(request):
     if request.method == 'POST':
         code = request.POST['codew']
 
-        if Coupon.objects.filter(coupon_code=code, is_available=True).exists() and  CouponUsers.objects.filter(user= request.user, coupon__coupon_code=code ).exists() == False :
+        if Coupon.objects.filter(coupon_code=code, is_available=True).exists() and  CouponUsers.objects.filter(user= request.user).exists() == False :
             coupon_object = Coupon.objects.get(coupon_code=code, is_available=True)
             coupon_user = CouponUsers()
             coupon_user.user    = request.user
@@ -289,10 +289,14 @@ def add_coupon(request):
             coupon_user.is_used = False
             coupon_user.amount  = coupon_object.amount
             coupon_user.save()
+            print("0000000000000000000")
+            print(coupon_user.amount)
 
             coupon_object.quantity -= 1
             if coupon_object.quantity == 0:
                 coupon_object.is_available = False
-            coupon_object.save()    
+            coupon_object.save() 
+        else:
+             return redirect(cart)  
             
     return redirect(cart)

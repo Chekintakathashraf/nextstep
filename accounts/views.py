@@ -36,14 +36,7 @@ from django.core.mail import EmailMessage
 
 def home(request):
     
-    # cart       = Cart.objects.get(cart_id=_cart_id(request))
-    # cart_items = CartItem.objects.filter(cart=cart, is_active=True)
     
-    # context = {
-    #     'cart_items' : cart_items,
-    # }
-    
-    # return render(request, 'accounts/home.html',context)
     return render(request, 'accounts/home.html')
 
 def register(request):
