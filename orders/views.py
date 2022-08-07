@@ -13,6 +13,8 @@ import json
 from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+
+from coupon.models import CouponUsers,Coupon
 # Create your views here.
 
 
@@ -85,15 +87,6 @@ def payments(request):
     return JsonResponse(data)
 
 
-
-
-
-
-
-
-
-
-
 def place_order(request, total=0, quantity=0):
 
     current_user = request.user
@@ -111,9 +104,16 @@ def place_order(request, total=0, quantity=0):
         total += (cart_item.product.price * cart_item.quantity)
         quantity += cart_item.quantity
 
-    tax = (2 * total)/100
-    grand_total = total + tax
+    # tax = (2 * total)/100
+    # grand_total = total + tax
 
+    if CouponUsers.objects.filter(user=request.user, is_used= False).exists() :
+        coupon_user = CouponUsers.objects.get(user=request.user, is_used= False)
+        print('----------------------------')
+        print(coupon_user)
+        coupon      = coupon_user.amount if total >= 500 else 0
+    tax = (2 * total/100 )
+    grand_total = total + tax - coupon
 
 
 
@@ -180,6 +180,7 @@ def place_order(request, total=0, quantity=0):
                 'total' : total,
                 'tax' : tax,
                 'grand_total' : grand_total,
+                'coupon' : coupon,
             }
 
             return render(request, 'orders/payments.html',context)
