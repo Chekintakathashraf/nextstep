@@ -205,19 +205,21 @@ def cart(request,total=0,quantity=0, cart_items=None):
         coupon =0
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
+            if CouponUsers.objects.filter(user=request.user, is_used= False).exists() :
+                coupon_user = CouponUsers.objects.get(user=request.user, is_used= False)
+                print('----------------------------')
+                print(coupon_user)
+                coupon = coupon_user.amount if total >= 500 else 0
+                print('++++++++++++++++++++++++++++++++++++++')
+                print(coupon)
         else:
             cart       = Cart.objects.get(cart_id=_cart_id(request))
             cart_items = CartItem.objects.filter(cart=cart, is_active=True)
         for cart_item in cart_items:
             total +=(cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
-        if CouponUsers.objects.filter(user=request.user, is_used= False).exists() :
-            coupon_user = CouponUsers.objects.get(user=request.user, is_used= False)
-            print('----------------------------')
-            print(coupon_user)
-            coupon = coupon_user.amount if total >= 500 else 0
-            print('++++++++++++++++++++++++++++++++++++++')
-            print(coupon)
+        
+        
         tax = (2 * total/100 )
         grand_total = total + tax - coupon
 
