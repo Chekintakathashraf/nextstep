@@ -1,0 +1,71 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+
+
+<br>
+  <br>
+  {% if not wishlist_items %}
+  
+  <h2 class="text-center">Your Wishlist Is Empty</h2>
+  <br>
+  <div class="text-center">
+    <a href="{% url 'store' %}" class="btn btn-primary">
+      Continue Shopping
+    </a>
+  </div>
+
+
+  {% else %}
+
+  <!--================Cart Area =================-->
+  <section class="cart_area padding_top">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Action</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for wishlist_item  in wishlist_items %}
+                <tr>
+                  <td>
+                    <div class="media">
+                      <div class="d-flex" style="height:20vh">
+                        <img src="{{wishlist_item.product.product_image.url}}" class=" img-sm"alt="" />
+                      </div>
+                      <div class="media-body">
+                        <h4>{{wishlist_item.product.brand}}</h4>
+                        <a href="{{wishlist_item.product.get_url}}"><p>{{wishlist_item.product.product_name}}</p></a>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h5>${{wishlist_item.product.price}}. 00</h5>
+                  </td>
+                    
+                  <td class="text-right">
+                    <div class="d-flex" style="">
+                    <a href="{% url 'remove_wishlist_item' wishlist_item.product.id wishlist_item.id%}" class="btn btn-danger">remove</a>
+                </div>
+                  </td>
+                </tr>
+             {% endfor %}
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </section>
+  <!--================End Cart Area =================-->
+  {% endif %}
+
+{% endblock content %}

@@ -25,9 +25,10 @@ class CategoryForm(forms.ModelForm):
 
 
 class ProductForm(forms.ModelForm):
+    image = forms.ImageField(required=False, error_messages = {'invalid':("image files only")}, widget=forms.FileInput)
     class Meta:
         model = Product
-        fields = ['product_name','describtion','price','is_available','stock','category']
+        fields = ['product_name','describtion','price','is_available','stock','category','image']
 
     def __init__(self,*args,**kwargs):
         super(ProductForm,self).__init__(*args,**kwargs)

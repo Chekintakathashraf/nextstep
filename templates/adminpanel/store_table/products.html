@@ -20,7 +20,7 @@
 
                     <tr>
                         <th>Product name</th>
-                        
+                        <th>Product image</th>
                         <th>Price</th>
                         <th>Stock</th>
                         
@@ -36,7 +36,7 @@
                         {% for product in products %}
                             <tr>
                                 <td>{{product.product_name}}</td>
-                                
+                                <td><img style="width: 10em;height: 8em;" src="{{ product.image.url }}" alt="" /></td>
                                 <td>₹ {{product.price}}</td>
                                 <td>{{product.stock}}</td>
                                 

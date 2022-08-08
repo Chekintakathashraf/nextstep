@@ -53,8 +53,11 @@
                 </div>
             </div>
 
+            
+
+
             <!-- File input -->
-            <div class="mb-3 row">
+             {% comment %} <div class="mb-3 row">
                 <label for="formFile" class="col-md-2 col-form-label">Product Image</label>
                 {{form.product_image}}
                 {% if images %}
@@ -63,9 +66,22 @@
                     {% endfor %}
                 {% endif %}
                 
-            </div>
+            </div>  {% endcomment %}
 
- 
+             <div class="mb-3 row">
+                <label for="formFile" class="col-md-2 col-form-label">Product Image</label>
+                {{form.image}}
+            </div>
+            <div class="mb-3 row">
+                <label for="formFile" class="col-md-2 col-form-label">Other Images</label>
+                <input class="form-control" name="images" type="file" id="formFileMultiple" multiple />
+                {% if more_images %}
+                    {% for more_image in more_images %}
+                    <img src="{{more_image.image.url}}" class="p-3" alt="product images" style="width:100px">
+                    {% endfor %}
+                {% endif %}
+
+            </div> 
 
             <div class="d-flex justify-content-end">
                 <a href="" class="btn btn-outline-danger"
