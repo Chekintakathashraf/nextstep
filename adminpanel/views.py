@@ -12,7 +12,7 @@ from adminpanel . forms import VariationForm
 
 from django.contrib.auth.decorators import login_required 
 # Create your views here.
-
+@login_required(login_url ='login')
 def adminpanel(request):
     if request.user.is_superadmin:
         return render(request,'adminpanel/adminpanel.html')
@@ -72,7 +72,7 @@ def addcategory(request):
     if request.user.is_superadmin:
         form = CategoryForm()
         if request.method == 'POST':
-            form = CategoryForm(request.POST)
+            form = CategoryForm(request.POST,request.FILES)
             if form.is_valid():
                 categorys = form.save()
                 category_name = form.cleaned_data['category_name']

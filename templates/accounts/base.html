@@ -57,14 +57,14 @@
 						<ul class="main-menu">
 							<li >
 								<a href="{% url 'home' %}">Home</a>
-								<!-- <ul class="sub-menu">
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul> -->
+								
 							</li>
 
 							<li>
+								<a href="{% url 'store' %}">Store</a>
+							</li>
+
+							{% comment %} <li>
 								<a href="{% url 'store' %}">Men</a>
 							</li>
 
@@ -74,7 +74,7 @@
 
 							<li>
 								<a href="{% url 'store' %}">Kids</a>
-							</li>
+							</li> {% endcomment %}
 
 							
 							<li class="label1" data-label1="top">
@@ -132,7 +132,16 @@
 									
 									<div class="header-cart-content flex-w js-pscroll">
 										<ul class="header-cart-wrapitem w-full">
-							
+											{% if not cart_items %}
+												<h2 class="text-center">Your Shopping Cart is Empty</h2>
+												<br>
+												<div class="text-center">
+													
+													<a href="{% url 'store' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+														Continue Shopping
+													</a>
+												</div>
+											{% else %}
 											{% for cart_item in show_product %}
 							
 											<li class="header-cart-item flex-w flex-t m-b-12">
@@ -169,6 +178,7 @@
 												</a>
 											</div>
 										</div>
+										{% endif %}
 									</div>
 								</div>
 							</div>
@@ -200,17 +210,26 @@
 													logged in by {{user.first_name}}
 												</li>
 												<li>
-													<a href="{% url 'logout' %}">Logout</a>
+													{% comment %} <a href="{% url 'logout' %}">Logout</a> {% endcomment %}
+													<a href="{% url 'logout' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+														Logout
+													</a>
 												</li>
 												
 
 												{% if user.is_superadmin %}
 													<li class="nav-item ">
-														<a class="nav-link" href="{% url 'adminpanel' %}">Admin Panel</a>
+														{% comment %} <a class="nav-link" href="{% url 'adminpanel' %}">Admin Panel</a> {% endcomment %}
+														<a href="{% url 'adminpanel' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+															Admin Panel
+														</a>
 													</li>
 													{% else %}
 													<li class="nav-item">
-														<a class="nav-link" href="{% url 'dashboard' %}">Account</a>
+														{% comment %} <a class="nav-link" href="{% url 'dashboard' %}">Account</a> {% endcomment %}
+														<a href="{% url 'dashboard' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+															Account
+														</a>
 													</li>
 													{% endif %}
 					
@@ -284,11 +303,17 @@
 					
 												{% else %}
 												<li>
-													<a href="{% url 'register' %}">Register</a>
+													{% comment %} <a href="{% url 'register' %}">Register</a> {% endcomment %}
+													<a href="{% url 'register' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+														Register
+													</a>
 												</li>
 					
 												<li>
-													<a href="{% url 'login' %}">Login</a>
+													{% comment %} <a href="{% url 'login' %}">Login</a> {% endcomment %}
+													<a href="{% url 'login' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+														Login
+													</a>
 												</li>
 												{% endif %}
 									</ul>

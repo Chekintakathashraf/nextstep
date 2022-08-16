@@ -100,6 +100,7 @@ def place_order(request, total=0, quantity=0):
 
     grand_total = 0
     tax = 0
+    coupon=0
     for cart_item in cart_items:
         total += (cart_item.product.price * cart_item.quantity)
         quantity += cart_item.quantity
@@ -107,14 +108,24 @@ def place_order(request, total=0, quantity=0):
     # tax = (2 * total)/100
     # grand_total = total + tax
 
+    # if CouponUsers.objects.filter(user=request.user, is_used= False).exists() :
+    #     coupon_user = CouponUsers.objects.get(user=request.user, is_used= False)
+    #     print('-----**************-------')
+    #     print(coupon_user)
+    #     coupon      = coupon_user.amount 
+    # tax = (2 * total/100 )
+    # grand_total = total + tax - coupon
     if CouponUsers.objects.filter(user=request.user, is_used= False).exists() :
         coupon_user = CouponUsers.objects.get(user=request.user, is_used= False)
         print('----------------------------')
         print(coupon_user)
-        coupon      = coupon_user.amount if total >= 500 else 0
+        coupon      = coupon_user.amount 
+        coupon_user.is_used= True
+        coupon_user.save()
+        print('*************************')
+        print(coupon_user.is_used)
     tax = (2 * total/100 )
     grand_total = total + tax - coupon
-
 
 
     if request.method == 'POST':

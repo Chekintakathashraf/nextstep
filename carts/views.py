@@ -212,6 +212,10 @@ def cart(request,total=0,quantity=0, cart_items=None):
                 coupon = coupon_user.amount 
                 print('++++++++++++++++++++++++++++++++++++++')
                 print(coupon)
+                print(coupon_user.is_used)
+            else:
+                coupon = 0
+                
         else:
             cart       = Cart.objects.get(cart_id=_cart_id(request))
             cart_items = CartItem.objects.filter(cart=cart, is_active=True)
@@ -258,6 +262,10 @@ def checkout(request,total=0,quantity=0, cart_items=None):
             print('----------------------------')
             print(coupon_user)
             coupon      = coupon_user.amount 
+            # coupon_user.is_used= True
+            # coupon_user.save()
+            print('*************************')
+            print(coupon_user.is_used)
         tax = (2 * total/100 )
         grand_total = total + tax - coupon
 
@@ -281,7 +289,7 @@ def add_coupon(request):
     if request.method == 'POST':
         code = request.POST['codew']
 
-        if Coupon.objects.filter(coupon_code=code, is_available=True).exists() and  CouponUsers.objects.filter(user= request.user).exists() == False :
+        if Coupon.objects.filter(coupon_code=code, is_available=True).exists() and  CouponUsers.objects.filter(user= request.user,is_used=False).exists() == False :
             coupon_object = Coupon.objects.get(coupon_code=code, is_available=True)
             coupon_user = CouponUsers()
             coupon_user.user    = request.user
@@ -297,6 +305,7 @@ def add_coupon(request):
                 coupon_object.is_available = False
             coupon_object.save() 
         else:
-             return redirect(cart)  
+            
+            return redirect(cart)  
             
     return redirect(cart)

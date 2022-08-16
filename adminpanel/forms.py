@@ -5,9 +5,10 @@ from store . models import Variation
 
 
 class CategoryForm(forms.ModelForm):
+    cat_image = forms.ImageField(required=False, error_messages = {'invalid':("image files only")}, widget=forms.FileInput)
     class Meta:
         model  = category
-        fields = ['category_name','description']
+        fields = ['category_name','description','cat_image']
 
     def __init__(self,*args,**kwargs):
         super(CategoryForm,self).__init__(*args,**kwargs)
