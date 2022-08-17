@@ -162,11 +162,7 @@ MESSAGE_TAGS = {
 
 #SMTP configuration
 
-# EMAIL_HOST = config('EMAIL_HOST')
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'ashrafchekintakath@gmail.com'
-# EMAIL_HOST_PASSWORD = 'fvqnsjafpvjcbjiy'
-# EMAIL_USE_TLS = True
+
 
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
@@ -175,7 +171,5 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 
-# RAZOR_KEY_ID = 'rzp_test_51zNiPi6NnxprP'
-# KEY_SECRET = 'xxEAry2EF7yXD852VyExL5rV'
 RAZOR_KEY_ID = config('RAZOR_KEY_ID')
 KEY_SECRET = config('KEY_SECRET')
