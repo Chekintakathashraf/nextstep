@@ -117,6 +117,51 @@
                     </div>
                 </div>
             </form>
+
+
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                    <h4 class="font-weight-semi-bold m-0">Available offer</h4>
+                </div>
+                <div class="card-body">
+                    <div>
+                         {% for x in couponlist %}
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium"> 
+                                    <i class="fa fa-gift"></i>
+                                    {{ x }} for ₹ {{ x.amount}}</h6>
+                            </div>
+                        {% endfor %} 
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium"> 
+                                
+                                {{offernote}}</h6>
+                        </div>
+                        
+                        {% comment %} {% if "grand_total">=2000 %}
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium"> 
+                                <i class="fa fa-gift"></i>
+                                COUPON01 for ₹ 500</h6>
+                        </div>
+                        {% elif "grand_total">=900 %}
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium"> 
+                                <i class="fa fa-gift"></i>
+                                COUPON02 for ₹ 100</h6>
+                        </div>
+                        {% else %}
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium"> 
+                                <i class="fa fa-gift"></i>
+                                Purchase above ₹ 900 for special offers</h6>
+                        </div>
+                        {% endif %} {% endcomment %}
+                    </div>
+                </div>
+            </div>
+
+
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-secondary border-0">
                     <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
@@ -126,11 +171,11 @@
                         <h6 class="font-weight-medium">Subtotal</h6>
                         <h6 class="font-weight-medium">₹ {{ total }}</h6>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Tax</h6>
                         <h6 class="font-weight-medium">₹ {{tax}}</h6>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Discount</h6>
                         <h6 class="font-weight-medium">₹ {{coupon}}</h6>
                     </div>

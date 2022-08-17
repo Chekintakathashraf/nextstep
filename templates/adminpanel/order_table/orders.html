@@ -41,7 +41,7 @@
                     {% if orders %}
                         {% for order in orders %}
                             <tr>
-                                <td>{{order.order_number}}</td>
+                                <td scope="row"> <a href="{% url 'order_details' order.order_number%}">{{order.order_number}}</a></td>
                                 <td>{{order.email}}</td>
                                 <td>{{order.phone}}</td>
                                 <td>${{order.order_total}}</td>

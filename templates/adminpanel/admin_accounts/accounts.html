@@ -8,7 +8,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800"> Account Table</h1>
+    <h1 class="h3 mb-2 text-gray-800"> User Account Table</h1>
     <p class="mb-4">User Account details</p>
 
     <!-- DataTales Example -->
@@ -47,6 +47,21 @@
                                 </tr>
                             {% endfor %}
                         {% endif %}
+                        {% if banned_users %}
+                            {% for user in banned_users %}
+                                <tr>
+                                    <td>{{user.first_name}}</td>
+                                    <td>{{user.last_name}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.username}}</td>
+                                    <td>{{user.last_login}}</td>
+                                    <td>{{user.date_joined}}</td>
+                                    <td>{{user.is_active}}</td> 
+                                    <td><a href="{% url 'unban_user' user.id %}" class="btn btn-success" onclick="return confirm('Are you sure to Un-ban {{user.first_name}} ?')"> unban</a></td>
+
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
                         
                     </tbody>
                 </table>
@@ -56,7 +71,7 @@
 
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+    {% comment %} <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Banned Users</h6>
         </div>
@@ -98,7 +113,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
 
 </div>
 <!-- /.container-fluid -->

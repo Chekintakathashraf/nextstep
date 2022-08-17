@@ -39,12 +39,12 @@
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapse1"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Accounts</span>
+            <span>Users Accounts</span>
         </a>
         <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" href="{% url 'user_accounts_table' %}">Account</a>
+                <a class="collapse-item" href="{% url 'user_accounts_table' %}">Users Account</a>
             
             </div>
         </div>
@@ -139,10 +139,7 @@
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Utilities:</h6>
-                <a class="collapse-item" href="utilities-color.html">Colors</a>
-                <a class="collapse-item" href="utilities-border.html">Borders</a>
-                <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                <a class="collapse-item" href="utilities-other.html">Other</a>
+                <a class="collapse-item" href="{% url 'home_table'%}">Carousal</a>
             </div>
         </div>
     </li>

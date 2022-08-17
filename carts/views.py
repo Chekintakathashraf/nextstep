@@ -191,6 +191,7 @@ def remove_cart_item(request, product_id,cart_item_id):
     product = get_object_or_404(Product, id=product_id)
     if request.user.is_authenticated:
         cart_item = CartItem.objects.get(product =product, user=request.user, id= cart_item_id)
+        print("000000000bhrtgshrjty0000000000")
     else:
         cart = Cart.objects.get(cart_id = _cart_id(request))
         cart_item = CartItem.objects.get(product =product, cart=cart, id= cart_item_id)
@@ -203,6 +204,9 @@ def cart(request,total=0,quantity=0, cart_items=None):
         tax=0
         grand_total=0
         coupon =0
+        couponlist=None
+        offernote=""
+        
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
             if CouponUsers.objects.filter(user=request.user, is_used= False).exists() :
@@ -217,8 +221,9 @@ def cart(request,total=0,quantity=0, cart_items=None):
                 coupon = 0
                 
         else:
-            cart       = Cart.objects.get(cart_id=_cart_id(request))
-            cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+            # cart       = Cart.objects.get(cart_id=_cart_id(request))
+            # cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+            pass
         for cart_item in cart_items:
             total +=(cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
@@ -226,7 +231,12 @@ def cart(request,total=0,quantity=0, cart_items=None):
         
         tax = (2 * total/100 )
         grand_total = total + tax - coupon
-
+        if grand_total>=2000:
+            couponlist = Coupon.objects.filter( amount=500,is_available=True)
+        elif grand_total>=900:
+            couponlist = Coupon.objects.filter( amount=100,is_available=True)
+        else:
+            offernote = "Purchase above ₹ 900 for special offers"
     except ObjectDoesNotExist:
         pass #just ignore
 
@@ -237,6 +247,8 @@ def cart(request,total=0,quantity=0, cart_items=None):
         'tax' : tax,
         'grand_total' : grand_total,
         'coupon' : coupon,
+        'couponlist' : couponlist,
+        'offernote' : offernote,
         
     }
     return render(request,'store/cart.html',context)
@@ -289,7 +301,8 @@ def add_coupon(request):
     if request.method == 'POST':
         code = request.POST['codew']
 
-        if Coupon.objects.filter(coupon_code=code, is_available=True).exists() and  CouponUsers.objects.filter(user= request.user,is_used=False).exists() == False :
+        if Coupon.objects.filter(coupon_code=code, is_available=True).exists() and  CouponUsers.objects.filter(user= request.user).exists() == False :
+            print('poiuytr')
             coupon_object = Coupon.objects.get(coupon_code=code, is_available=True)
             coupon_user = CouponUsers()
             coupon_user.user    = request.user

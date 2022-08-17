@@ -10,6 +10,9 @@ from orders . models import Product,Variation
 from adminpanel . forms import ProductForm
 from adminpanel . forms import VariationForm
 
+from . models import Carousel
+from adminpanel . forms import CarouselForm
+
 from django.contrib.auth.decorators import login_required 
 # Create your views here.
 @login_required(login_url ='login')
@@ -155,6 +158,21 @@ def order_table(request,id):
     else:
         return redirect('home')
 
+def order_details(request, order_id):
+    order_detail = OrderProduct.objects.filter(order__order_number = order_id)
+    order = Order.objects.get(order_number = order_id)
+
+    subtotal = 0
+    for i in order_detail:
+        subtotal = i.product_price * i.quantity
+
+    context = {
+        'order_detail' : order_detail,
+        'order' : order,
+        'subtotal' : subtotal,
+    }
+    return render(request,'adminpanel/order_table/order_details.html',context)
+
 @login_required(login_url ='login')
 def order_accepted(request,order_id):
     if request.user.is_superadmin:
@@ -290,5 +308,79 @@ def delete_variations(request,id):
         variation = Variation.objects.get(id=id)
         variation.delete()
         return redirect('store_table',id=2)
+    else:
+        return redirect ('home')
+
+def home_table(request):
+    if request.user.is_superadmin:
+        carousels = Carousel.objects.all()
+       
+        context = {
+           'carousels' : carousels,
+        }
+        
+        return render(request,'adminpanel/home_table/carousel.html',context)
+      
+    else: 
+        return redirect ('home')
+
+def add_carousels(request):
+    if request.user.is_superadmin:
+        form = CarouselForm()
+        if request.method == 'POST':
+            form = CarouselForm(request.POST,request.FILES)
+            print(form)
+            if form.is_valid():
+                form.save()
+                return redirect('home_table')
+        else:
+            form = CarouselForm()
+        context = {
+            'form' : form,
+        }
+        return render(request,'adminpanel/home_table/add_carousel.html',context)
+    else:
+        return redirect('home')
+
+def edit_carousel(request,id):
+    if request.user.is_superadmin:
+        carousel = Carousel.objects.get(id=id)
+        if request.method =='POST':
+            form = CarouselForm(request.POST,instance=carousel)
+            if form.is_valid():
+                form.save()
+                return redirect('home_table')
+        else:
+            form = CarouselForm(instance=carousel)
+        context = {
+            'form' : form,
+        }
+        return render (request,'adminpanel/home_table/add_carousel.html',context)
+    else:
+        return redirect ('home')
+
+def carousel_not_available(request,id):
+    if request.user.is_superadmin:
+        carousel           = Carousel.objects.get(id=id)
+        carousel.is_available = False
+        carousel.save()
+        return redirect('home_table')
+    else:
+        return redirect ('home')
+
+def caraousel_available(request,id):                                                                                                                                                                                                                                                                                                                             
+    if request.user.is_superadmin:
+        carousel           = Carousel.objects.get(id=id)
+        carousel.is_available = True
+        carousel.save()
+        return redirect('home_table')
+    else:
+        return redirect ('home')
+
+def delete_carousel(request,id):
+    if request.user.is_superadmin:
+        carousel = Carousel.objects.get(id=id)
+        carousel.delete()
+        return redirect('home_table')
     else:
         return redirect ('home')

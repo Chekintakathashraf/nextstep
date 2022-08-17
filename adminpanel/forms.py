@@ -2,7 +2,7 @@ from category . models import category
 from django import forms
 from store . models import Product
 from store . models import Variation
-
+from . models import Carousel
 
 class CategoryForm(forms.ModelForm):
     cat_image = forms.ImageField(required=False, error_messages = {'invalid':("image files only")}, widget=forms.FileInput)
@@ -57,3 +57,8 @@ class VariationForm(forms.ModelForm):
     class Meta:
         model = Variation
         fields = ['product','variation_category','variation_value','is_active']
+
+class CarouselForm(forms.ModelForm):
+    class Meta:
+        model = Carousel
+        fields = ['title','discription','banner_image','is_available']
