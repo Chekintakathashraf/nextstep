@@ -128,7 +128,7 @@
                         <h6 class="font-weight-medium">₹ {{tax}}</h6>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Tax</h6>
+                        <h6 class="font-weight-medium">Discount</h6>
                         <h6 class="font-weight-medium">₹ {{coupon}}</h6>
                     </div>
                 </div>
@@ -148,10 +148,10 @@
                     
                         <div class="custom-control custom-radio">
                             <input type="radio" class="custom-control-input" name="payment" id="paypal">
-                            <label class="custom-control-label" for="paypal">Razorpay</label>
+                            <label class="custom-control-label" for="paypal"><i class="zmdi zmdi-flattr"></i>Razorpay</label>
                         </div>
                     </div>
-                    <div class="form-group">
+                    {% comment %} <div class="form-group">
                         <div class="custom-control custom-radio">
                             <input type="radio" class="custom-control-input" name="payment" id="directcheck">
                             <label class="custom-control-label" for="directcheck">Direct Check</label>
@@ -162,7 +162,7 @@
                             <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
                             <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                     
                 </div>
                 <span class="card-footer border-secondary bg-transparent">

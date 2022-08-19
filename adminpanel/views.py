@@ -13,6 +13,8 @@ from adminpanel . forms import VariationForm
 from . models import Carousel
 from adminpanel . forms import CarouselForm
 
+from django.db.models import Q
+
 from django.contrib.auth.decorators import login_required 
 # Create your views here.
 @login_required(login_url ='login')
@@ -384,3 +386,69 @@ def delete_carousel(request,id):
         return redirect('home_table')
     else:
         return redirect ('home')
+
+# def admin_search(request):
+#     if 'keywords' in request.GET:
+#         keywords = request.GET['keywords']
+#         if keywords:
+#            products = Product.objects.order_by('-created_date').filter(Q(description__icontains=keywords) | Q(product_name__icontains=keywords))
+            
+#         context = {
+           
+#             'products':products,
+
+#         }
+        
+#         return render(request,'adminpanel/store_table/products.html',context)
+#     return redirect('adminpanel')
+
+
+def variationsearch(request):
+    variations=[]
+    if 'keywordss' in request.GET:
+        keywordss=request.GET['keywordss']
+    
+        if keywordss:
+            variations=Variation.objects.order_by('-created_date').filter(Q(variation_category__icontains=keywordss)|Q(variation_value__icontains=keywordss))
+        context={
+            'variations':variations,
+        }
+    return render(request,'adminpanel/store_table/variations.html',context)
+def productsearch(request):
+    products=[]
+    if 'keywordss' in request.GET:
+        keywordss=request.GET['keywordss']
+    
+        if keywordss:
+            products=Product.objects.order_by('-created_date').filter(Q(product_name__icontains=keywordss))
+        context={
+            'products':products,
+        }
+    return render(request,'adminpanel/store_table/products.html',context)
+def adminuserdetails(request):
+    user=[]
+    if 'keywordss' in request.GET:
+        
+        keyword=request.GET['keywordss']
+        if keyword:
+            user=Account.objects.filter(Q(first_name__icontains=keyword)|Q(last_name__icontains=keyword)|Q(email__icontains=keyword)|Q(phone_number__icontains=keyword)|Q(username__icontains=keyword))
+            print(user)
+            context={
+                'active_users':user,
+                
+            }
+    return render(request,'adminpanel/admin_accounts/accounts.html',context)
+
+def ordersearch(request):
+    
+    orders=[]
+    if 'keywords' in request.GET:
+        
+        keyword=request.GET['keywords']
+        if keyword:
+            orders=OrderProduct.objects.order_by('-created_at').filter(Q(product__product_name__icontains=keyword)|Q(user__email__icontains=keyword))
+            context={
+                
+                'order_products':orders,
+            }
+    return render(request,'adminpanel/order_table/order_products.html',context)

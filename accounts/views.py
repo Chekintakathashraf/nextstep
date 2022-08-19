@@ -15,8 +15,8 @@ from django.contrib.auth.decorators import login_required
 from carts.views import _cart_id
 from orders.models import Order, OrderProduct
 
-#for car
-
+#for carosel
+from adminpanel . models import Carousel
 
 
 from carts.views import _cart_id
@@ -35,9 +35,16 @@ from django.core.mail import EmailMessage
 # Create your views here.
 
 def home(request):
+    products       = Product.objects.all().filter(is_available = True)
+    carousels = Carousel.objects.all().filter(is_available = True)
     
+
+    context  = {
+        'products' : products,
+        'carousels' : carousels,
     
-    return render(request, 'accounts/home.html')
+    }
+    return render(request, 'accounts/home.html',context)
 
 def register(request):
     if request.method == 'POST':

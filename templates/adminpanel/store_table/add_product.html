@@ -28,7 +28,7 @@
             <div class="mb-3 row">
                 <label for="exampleFormControlTextarea1" class="col-md-2 col-form-label">price</label>
                 <div class="col-md-10">
-                    {{form.price}}
+                    ₹ {{form.price}}
                 </div>
             </div>
             
@@ -72,7 +72,7 @@
                 <label for="formFile" class="col-md-2 col-form-label">Product Image</label>
                 {{form.image}}
             </div>
-            <div class="mb-3 row">
+            {% comment %} <div class="mb-3 row">
                 <label for="formFile" class="col-md-2 col-form-label">Other Images</label>
                 <input class="form-control" name="images" type="file" id="formFileMultiple" multiple />
                 {% if more_images %}
@@ -81,7 +81,7 @@
                     {% endfor %}
                 {% endif %}
 
-            </div> 
+            </div>  {% endcomment %}
 
             <div class="d-flex justify-content-end">
                 <a href="" class="btn btn-outline-danger"

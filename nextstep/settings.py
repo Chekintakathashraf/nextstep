@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 
 from pathlib import Path
+from unittest.mock import DEFAULT
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'adminpanel',
     'coupon',
     'wishlist',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -93,10 +95,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'nextstep',
-        'USER': 'postgres',
-        'PASSWORD': '8080',
-        'HOST': 'localhost',
-        'PORT': '',
+        'USER': 'nextstep',
+        'PASSWORD': '8129486905',
+        'HOST': 'database-1.crcjjftbknhi.ap-south-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -173,3 +175,13 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 
 RAZOR_KEY_ID = config('RAZOR_KEY_ID')
 KEY_SECRET = config('KEY_SECRET')
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = False
+
+AWS_ACCESS_KEY_ID = 'AKIAYTA3YYOJMPS42532'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'nextstep-bucket'

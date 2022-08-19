@@ -36,4 +36,10 @@ urlpatterns = [
     path('caraousel_available/<int:id>/',views.caraousel_available,name='caraousel_available'),
     path('delete_carousel/<int:id>/',views.delete_carousel,name="delete_carousel"),
 
+    # path('admin_search/',views.admin_search,name="admin_search"),
+    path('variation_search/',views.variationsearch,name="variationsearch"),
+    path('adminuserdetails/',views.adminuserdetails,name="adminuserdetails"),
+    path('ordersearch/',views.ordersearch,name="ordersearch"),
+    path('productsearch/',views.productsearch,name="productsearch"),
+
 ]
