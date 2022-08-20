@@ -7,18 +7,23 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css" integrity="sha384-X8QTME3FCg1DLb58++lPvsjbQoCT9bp3MsUU3grbIny/3ZwUJkRNO8NPW6zqzuW9" crossorigin="anonymous">
-	
+
+
+
+	{% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" >  {% endcomment %}
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.0/fonts/FontAwesome.otf" rel="stylesheet">
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.png' %}"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-<!--===============================================================================================-->
+	{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">  {% endcomment %}
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'fonts/linearicons-v1.0.0/icon-font.min.css' %}">
+	{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'fonts/linearicons-v1.0.0/icon-font.min.css' %}"> {% endcomment %}
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/linearicons@1.0.2/dist/web-font/style.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
 <!--===============================================================================================-->	
@@ -296,6 +301,7 @@
 				</div>
 			</div>
 		</div>
+		{% if user.id is not None %}
         <div class="flex-c-m h-full p-r-5 bor5">
 			<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="{{ cart_count }}">
 				<a href="{% url 'cart'%}" class="">
@@ -304,6 +310,7 @@
 			</div>
                   
         </div>
+	{% endif %}
 		
 		{% comment %} <div class="flex-c-m h-full p-r-5">
 			<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 " >
@@ -516,7 +523,7 @@
 
 					<div class="p-t-27">
 						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-facebook"></i>
+							<i class="fa fa-facebook-square"></i>
 						</a>
 
 						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
@@ -524,7 +531,7 @@
 						</a>
 
 						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-							<i class="fa fa-pinterest-p"></i>
+							<i class="zmdi zmdi-facebook-box"></i>
 						</a>
 					</div>
 				</div>
@@ -844,6 +851,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</script>
 <!--===============================================================================================-->
 	<script src="{% static 'js/main.js' %}"></script>
+	<script src="https://kit.fontawesome.com/dc17b5d62f.js" crossorigin="anonymous"></script>
 
 </body>
 </html>
