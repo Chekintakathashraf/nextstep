@@ -31,8 +31,8 @@ def add_cart(request, product_id):
                 
 
                 try:
-                    
-                    variation = Variation.objects.get(product=product, variation_category__iexact=key,
+                    variation = Variation.objects.get(product=product,
+                    variation_category__iexact=key,
                     variation_value__iexact=value)
                     product_variation.append(variation)
                     
@@ -59,6 +59,7 @@ def add_cart(request, product_id):
                 # increase the cart item quantity
                 index = ex_var_list.index(product_variation)
                 item_id = id[index]
+                print("aaaaaaaaaaaaaaaa")
                 item = CartItem.objects.get(product=product, id=item_id)
                 item.quantity += 1
                 item.save()
@@ -138,6 +139,7 @@ def add_cart(request, product_id):
                 # increase the cart item quantity
                 index = ex_var_list.index(product_variation)
                 item_id = id[index]
+                print("pppppppppppppp")
                 item = CartItem.objects.get(product=product, id=item_id)
                 item.quantity += 1
                 item.save()
@@ -221,9 +223,9 @@ def cart(request,total=0,quantity=0, cart_items=None):
                 coupon = 0
                 
         else:
-            # cart       = Cart.objects.get(cart_id=_cart_id(request))
-            # cart_items = CartItem.objects.filter(cart=cart, is_active=True)
-            pass
+            cart = Cart.objects.get(cart_id=_cart_id(request))
+            cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+            # pass
         
         try:
                     

@@ -37,11 +37,17 @@ from django.core.mail import EmailMessage
 def home(request):
     products       = Product.objects.all().filter(is_available = True)
     carousels = Carousel.objects.all().filter(is_available = True)
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(user=request.user, is_active=True)
+    else:
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart, is_active=True)
     
 
     context  = {
         'products' : products,
         'carousels' : carousels,
+        'cart_items':cart_items,
     
     }
     return render(request, 'accounts/home.html',context)
