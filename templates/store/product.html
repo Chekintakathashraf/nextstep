@@ -239,13 +239,13 @@
                             </a>
 
                             <span class="stext-105 cl3">
-                                {{ product.price }}
+                                ₹ {{ product.price }}
                             </span>
                         </div>
 
                         <div class="block2-txt-child2 flex-r p-t-3">
                             <a href="{% url 'add_wishlist' product.id %}" class="btn-addwish-b2 dis-block pos-relative ">
-                                <img class="icon-heart1 dis-block trans-04" src="/static/images/icons/icon-heart-01.png" alt="ICON">
+                                <img class="icon-heart1 dis-block trans-04" src="{% static 'images/icons/icon-heart-01.png'%}" alt="ICON">
                             </a>
                         </div>
                     </div>

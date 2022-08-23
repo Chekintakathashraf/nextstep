@@ -301,7 +301,7 @@
 				</div>
 			</div>
 		</div>
-		{% if user.id is not None %}
+		{% comment %} {% if user.id is not None %} {% endcomment %}
         <div class="flex-c-m h-full p-r-5 bor5">
 			<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="{{ cart_count }}">
 				<a href="{% url 'cart'%}" class="">
@@ -310,7 +310,7 @@
 			</div>
                   
         </div>
-	{% endif %}
+	{% comment %} {% endif %} {% endcomment %}
 		
 		{% comment %} <div class="flex-c-m h-full p-r-5">
 			<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 " >
@@ -421,7 +421,7 @@
 		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
 			<div class="container-search-header">
 				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-					<img src="/static/images/icons/icon-close2.png" alt="CLOSE">
+					<img src="{% static 'images/icons/icon-close2.png' %}" alt="CLOSE">
 				</button>
 
 				<form class="wrap-search-header flex-w p-l-15" action="{% url 'search' %}">
